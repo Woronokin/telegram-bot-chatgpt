@@ -25,7 +25,7 @@ max_symbols = lambda message: int(len(message.text)) > 2000
 
 @dp.message_handler(max_symbols, content_types=['any'])
 async def handle_unwanted_users(message: types.Message):
-    await message.answer("Ошибка! Введенное количество символов превышает максимальное значение в 2000" + "\n\nКоличество введенных символов: " + str(len(message.text)) + "\n\nСократите Ваш запрос")
+    await message.answer("Ошибка! Введенное количество символов превышает максимальное значение в 2000 \n\nКоличество введенных символов: " + str(len(message.text)) + "\n\nСократите Ваш запрос \n\nЧитайте подробнее о токенах OpenAI API: https://nikonorow.ru/kolichestvo-tokenov-postupleniya-openai-api-python/")
     return
 
 @dp.message_handler()
