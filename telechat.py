@@ -12,16 +12,21 @@ dp = Dispatcher(bot)
 
 # print(openai.Model.list())
 
-users = (tg_id1,tg_id2)
+users = {tg_id1,tg_id2}
 
 accepted_users = lambda message: message.from_user.id not in users
-
 
 @dp.message_handler(accepted_users, content_types=['any'])
 async def handle_unwanted_users(message: types.Message):
     await message.answer("Извините, бот работает только для одобренных пользователей. Если вы хотите написать такой же бот - перейдите по ссылке: https://nikonorow.ru/pishem-telegram-bota-chatgpt-na-python/")
     return
 
+max_symbols = lambda message: int(len(message.text)) > 2000
+
+@dp.message_handler(max_symbols, content_types=['any'])
+async def handle_unwanted_users(message: types.Message):
+    await message.answer("Ошибка! Введенное количество символов превышает максимальное значение в 2000" + "\n\nКоличество введенных символов: " + str(len(message.text)) + "\n\nСократите Ваш запрос")
+    return
 
 @dp.message_handler()
 async def send(message: types.Message):
